@@ -1,30 +1,68 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BookCard } from "../BookCard/BookCard";
+
 import { SortAndFilterButtons } from "../SortAndFilterButtons/SortAndFilterButtons";
 import styled from "styled-components";
 
 export const Section = () => {
-  // you will receive section name from URL here.
-  // Get books for only this section and show
-  //   Everything else is same as Home page
+ 
 
   const Main = styled.div`
-    /* Same as Homepage */
+    
   `;
+
+const navigate= useNavigate()
+const {section} = useParams()
+
+const [db,setdb]=useState([])
+const [sale,setsale]=useState([])
+
+console.log(sale,"bbvnbnml")
+useEffect(()=>{
+axios.get(`http://localhost:8080/books`).then((res)=>{
+
+console.log(res.data,"data")
+setdb(res.data)
+
+
+// for(var i=0; i<db.length; i++){
+
+//   if(db[i].section===section){
+//     setsale(db[i])
+//   }
+  
+//   }
+
+
+})
+},[])
+
+
+
 
   return (
     <>
       <h2 style={{ textAlign: "center" }}>
         {
-          //   Show section name here
+            <h2>Section</h2>
         }
       </h2>
       <SortAndFilterButtons handleSort={"give sorting function to component"} />
 
       <Main className="sectionContainer">
-        {/* SHow same BookCard component here, just like homepage but with books only belong to this Section */}
+        {db.filter((el)=>{
+          if(el.section==section){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }).map((el,i)=>{
+          return <div key={i}> <BookCard id={el.id} img={el.image} title={el.title} price={el.price}/></div>
+        })
+        }
       </Main>
     </>
   );

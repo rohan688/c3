@@ -1,57 +1,54 @@
 import axios from "axios";
-import {Link} from 'react-router-dom'
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { BookCard } from "../BookCard/BookCard";
 import { SortAndFilterButtons } from "../SortAndFilterButtons/SortAndFilterButtons";
-import styled from "styled-components";
 
 
 export const Home = () => {
-  // get all books when user lands on the page
-  const [list,setlist]=useState([]);
+  
+const [db,setdb]=useState([])
+
+console.log(db,"db")
+
+useEffect(()=>{
+axios.get("http://localhost:8080/books").then(({data})=>{
 
 
-  useEffect(()=>{
-    axios.get('http://localhost:8080/books').then((res)=>{
-      setlist(res.data)
-    
-    })
-  },[])
-  // populate them as mentioned below
+setdb(data)
+
+})
+},[])
+
+
 
   const Main = styled.div`
-  display:grid;
-  grid-gap:30px;
-  grid-template-columns:500px 500px 500px;
-  border:1px solid black;
-  
-   
+display: grid;
+grid-gap: 30px;
+grid-template-columns:300px 300px 300px;
 
   `;
 
   return (
-    <div className="homeContainer" style={{marginLeft:"80px"}}>
+
+    
+
+    <div className="homeContainer">
+
+     
       <h2 style={{ textAlign: "center" }}>Home</h2>
       <SortAndFilterButtons
         handleSort={
-          "give handleSort function to this component, that sorts books"
+          SortAndFilterButtons
         }
       />
 
       <Main className="mainContainer">
-        {list.map((el)=>{
-          return <Link to={`/books/${el.id}`}>
-            <div>
-             <img style={{width:"300px",height:"400px"}} src={el.img} alt=""/>
-            <h4>{el.title}</h4>
-            <h3>{el.price}</h3>
-            </div>
-
-          </Link>
-
-        })
-        }
-     </Main>
+        {db.map((el)=>{
+       return <BookCard id={el.id} img={el.img} title={el.title} price={el.price}/>
+        })}
+      </Main>
     </div>
   );
 };

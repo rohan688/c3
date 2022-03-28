@@ -10,10 +10,11 @@ export const AllRoutes = () => {
     <>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route  path="/books/:id" element={<BookDetailsPage/>} />
-        <Route  path="*" element={<NotFound/>} />
-
+        <Route path="/" element={<Home />} />
+        <Route path="/section/:section" element={<Section />} /> 
+        <Route path="*" element={<NotFound />} />
+        <Route path="/books/:id" element={<BookDetailsPage/>} />
+        {/* <Route path="/books/:section" element={<BookDetailsPage/>} /> */}
         {/* Create other routes here: Section, bookdetailspage and 404 */}
         {/*  */}
       </Routes>
