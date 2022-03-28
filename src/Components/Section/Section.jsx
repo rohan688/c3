@@ -60,7 +60,7 @@ setdb(res.data)
             return false;
           }
         }).map((el,i)=>{
-          return <div key={i}> <BookCard id={el.id} img={el.image} title={el.title} price={el.price}/></div>
+          return <div key={i}> <BookCard id={el.id} img={el.img} title={el.title} price={el.price}/></div>
         })
         }
       </Main>
